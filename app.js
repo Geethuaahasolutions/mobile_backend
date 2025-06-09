@@ -13,19 +13,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
-
 app.use((req, res, next) => {
   const logEntry = `[${new Date().toISOString()}] ${req.method} ${req.originalUrl}\n`;
   console.log(logEntry.trim());
   next();
 });
 
+// Log all JSON responses to the terminal
 app.use((req, res, next) => {
   const oldJson = res.json;
   res.json = function (data) {
-    console.log(`Response for ${req.method} ${req.originalUrl}:`, data);
-    logStream.write(`Response for ${req.method} ${req.originalUrl}: ${JSON.stringify(data)}\n`);
+    console.log("Response data:", data);
     oldJson.call(this, data);
   };
   next();
