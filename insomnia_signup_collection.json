@@ -188,6 +188,22 @@
         }
       ],
       "_type": "request"
+    },
+    {
+      "_id": "req_get_profile",
+      "parentId": "wrk_signup_api",
+      "name": "Get User Profile",
+      "description": "Fetch user profile by email.",
+      "method": "GET",
+      "url": "http://localhost:3000/signup/profile?email_id=test@example.com",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
     }
   ]
 }

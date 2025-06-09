@@ -32,6 +32,24 @@ class SignupController {
             return res.status(500).json({ message: 'Error updating profile', error: error.message });
         }
     }
+
+    async getProfile(req, res) {
+        const { email_id } = req.query;
+        if (!email_id) {
+            return res.status(400).json({ message: 'Email is required' });
+        }
+        try {
+            const user = await UserModel.findByEmail(email_id);
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+            // Exclude password fields from response
+            const { password, confirm_password, ...profile } = user;
+            res.json(profile);
+        } catch (error) {
+            res.status(500).json({ message: 'Error fetching profile', error: error.message });
+        }
+    }
 }
 
 module.exports = SignupController;

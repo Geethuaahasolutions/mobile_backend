@@ -6,5 +6,6 @@ const signupController = new SignupController();
 
 router.post('/', signupController.createUser); 
 router.post('/update-profile', signupController.updateProfile);
+router.get('/profile', signupController.getProfile);
 
 module.exports = router;

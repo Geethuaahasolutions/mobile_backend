@@ -20,5 +20,15 @@ class UserModel {
             });
         });
     }
+
+    static findByEmail(email_id) {
+        return new Promise((resolve, reject) => {
+            const query = 'SELECT * FROM users WHERE email_id = ?';
+            db.query(query, [email_id], (err, results) => {
+                if (err) return reject(err);
+                resolve(results[0]);
+            });
+        });
+    }
 }
 module.exports = UserModel;
