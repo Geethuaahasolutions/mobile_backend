@@ -88,8 +88,26 @@ async resetPassword(req, res) {
       res.status(500).json({ message: 'Database error', error: err.message });
     }
   }
-}
 
+
+async changePassword(req, res) {
+  const { email_id, new_password, confirm_password } = req.body;
+
+  if (!email_id || !new_password || !confirm_password) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+  if (new_password !== confirm_password) {
+    return res.status(400).json({ message: 'Passwords do not match' });
+  }
+
+  try {
+    await ForgotModel.updatePassword(email_id, new_password);
+    res.json({ message: 'Password changed successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Database error', error: err.message });
+  }
+}
+}
 module.exports = new ForgotController();
 // This code defines a ForgotController class that handles the logic for sending OTPs, verifying them, and resetting passwords.
 // It uses the ForgotModel to interact with the database and nodemailer to send emails.

@@ -148,6 +148,26 @@
       "parameters": [],
       "headers": [],
       "_type": "request"
+    },
+    {
+      "_id": "req_change_password",
+      "parentId": "wrk_signup_api",
+      "name": "Change Password",
+      "description": "Change password for a user.",
+      "method": "POST",
+      "url": "http://localhost:3000/forgot/change-password",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email_id\": \"test@example.com\",\n  \"new_password\": \"newpassword123\",\n  \"confirm_password\": \"newpassword123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
     }
   ]
 }
