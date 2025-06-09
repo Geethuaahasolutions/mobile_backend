@@ -31,7 +31,7 @@ class ForgotModel {
 static updatePassword(email_id, new_password) {
   return new Promise((resolve, reject) => {
     db.query(
-      'UPDATE users SET password = ?, conform_password = ?, otp = NULL WHERE email_id = ?',
+      'UPDATE users SET password = ?, confirm_password = ?, otp = NULL WHERE email_id = ?',
       [new_password, new_password, email_id],
       (err, results) => {
         if (err) return reject(err);
@@ -39,5 +39,6 @@ static updatePassword(email_id, new_password) {
       }
     );
   });
-}}
+}
+}
 module.exports = ForgotModel;
