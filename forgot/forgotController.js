@@ -50,10 +50,15 @@ class ForgotController {
   }
 
 async resetPassword(req, res) {
-    const { email_id, otp, new_password, confirm_password } = req.body;
+    let { email_id, otp, new_password, confirm_password } = req.body;
+
+    // Convert arrays to strings if needed
+    if (Array.isArray(otp)) otp = otp.join('');
+    if (Array.isArray(new_password)) new_password = new_password.join('');
+    if (Array.isArray(confirm_password)) confirm_password = confirm_password.join('');
 
     // Debug: Log the incoming request body and types
-    console.log('resetPassword request:', req.body);
+    console.log('resetPassword request:', { email_id, otp, new_password, confirm_password });
     console.log('Types:', {
       email_id: typeof email_id,
       otp: typeof otp,
@@ -82,7 +87,8 @@ async resetPassword(req, res) {
     } catch (err) {
       res.status(500).json({ message: 'Database error', error: err.message });
     }
-  }}
+  }
+}
 
 module.exports = new ForgotController();
 // This code defines a ForgotController class that handles the logic for sending OTPs, verifying them, and resetting passwords.
