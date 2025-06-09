@@ -5,5 +5,6 @@ const router = express.Router();
 const signupController = new SignupController();
 
 router.post('/', signupController.createUser); 
+router.post('/update-profile', signupController.updateProfile);
 
 module.exports = router;

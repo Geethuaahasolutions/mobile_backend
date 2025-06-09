@@ -91,9 +91,15 @@ async resetPassword(req, res) {
 
 
 async changePassword(req, res) {
-  const { email_id, new_password, confirm_password } = req.body;
+  const { current_password, new_password, confirm_password } = req.body;
 
-  if (!email_id || !new_password || !confirm_password) {
+  // Get user info from authentication middleware (e.g., req.user)
+  const user = req.user; // This should be set by your auth middleware
+
+  if (!user) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+  if (!current_password || !new_password || !confirm_password) {
     return res.status(400).json({ message: 'All fields are required' });
   }
   if (new_password !== confirm_password) {
@@ -101,7 +107,13 @@ async changePassword(req, res) {
   }
 
   try {
-    await ForgotModel.updatePassword(email_id, new_password);
+    // 1. Check current password
+    if (user.password !== current_password) {
+      return res.status(401).json({ message: 'Current password is incorrect' });
+    }
+
+    // 2. Update password
+    await ForgotModel.updatePassword(user.email_id, new_password);
     res.json({ message: 'Password changed successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Database error', error: err.message });

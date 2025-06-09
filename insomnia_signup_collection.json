@@ -18,7 +18,27 @@
       "url": "http://localhost:3000/signup",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"username\": \"testuser\",\n  \"email_id\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"conform_password\": \"password123\"\n}"
+        "text": "{\n  \"username\": \"testuser\",\n  \"email_id\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"confirm_password\": \"password123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "_type": "request"
+    },
+    {
+      "_id": "req_update_profile",
+      "parentId": "wrk_signup_api",
+      "name": "Step 1b: Update Profile",
+      "description": "Update user profile after signup.",
+      "method": "POST",
+      "url": "http://localhost:3000/signup/update-profile",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email_id\": \"test@example.com\",\n  \"dob\": \"2000-01-01\",\n  \"ph_no\": \"1234567890\",\n  \"address\": \"123 Main St\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -158,7 +178,7 @@
       "url": "http://localhost:3000/forgot/change-password",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"email_id\": \"test@example.com\",\n  \"new_password\": \"newpassword123\",\n  \"confirm_password\": \"newpassword123\"\n}"
+        "text": "{\n  \"email_id\": \"test@example.com\",\n  \"current_password\": \"oldpassword123\",\n  \"new_password\": \"newpassword123\",\n  \"confirm_password\": \"newpassword123\"\n}"
       },
       "parameters": [],
       "headers": [
