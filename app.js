@@ -13,13 +13,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Logging
-const logStream = fs.createWriteStream(path.join(__dirname, 'server.log'), { flags: 'a' });
+
 
 app.use((req, res, next) => {
   const logEntry = `[${new Date().toISOString()}] ${req.method} ${req.originalUrl}\n`;
   console.log(logEntry.trim());
-  logStream.write(logEntry);
   next();
 });
 
