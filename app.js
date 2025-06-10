@@ -9,21 +9,13 @@ const loginRoutes = require('./login/loginRoutes');
 const forgotRoutes = require('./forgot/forgotRoutes');
 const uploadRoutes = require('./uploadvideo/uploadRoutes');
 
-
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Serve uploaded avatars statically
-app.use('/uploads/avatars', express.static(path.join(__dirname, 'uploads/avatars')));
-
-// Serve videos statically
-app.use('/videos', express.static(path.join(__dirname, 'videos')));
-
-// Log all requests to the console
 app.use((req, res, next) => {
-  const logEntry = `[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`;
-  console.log(logEntry);
+  const logEntry = `[${new Date().toISOString()}] ${req.method} ${req.originalUrl}\n`;
+  console.log(logEntry.trim());
   next();
 });
 
@@ -36,6 +28,9 @@ app.use((req, res, next) => {
   };
   next();
 });
+
+// Serve videos statically
+app.use('/videos', express.static(path.join(__dirname, 'videos')));
 
 // Register routes
 app.use('/signup', signupRoutes);

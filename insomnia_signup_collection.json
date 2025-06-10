@@ -204,43 +204,6 @@
         }
       ],
       "_type": "request"
-    },
-    {
-      "_id": "req_update_profile_with_avatar",
-      "parentId": "wrk_signup_api",
-      "name": "Step 1c: Update Profile with Avatar",
-      "description": "Update user profile and upload avatar.",
-      "method": "POST",
-      "url": "http://localhost:3000/signup/update-profile",
-      "body": {
-        "mimeType": "multipart/form-data",
-        "params": [
-          {
-            "name": "email_id",
-            "value": "test@example.com"
-          },
-          {
-            "name": "dob",
-            "value": "2000-01-01"
-          },
-          {
-            "name": "ph_no",
-            "value": "1234567890"
-          },
-          {
-            "name": "address",
-            "value": "123 Main St"
-          },
-          {
-            "name": "avatar",
-            "type": "file",
-            "fileName": "/path/to/your/avatar.jpg"
-          }
-        ]
-      },
-      "parameters": [],
-      "headers": [],
-      "_type": "request"
     }
   ]
 }
