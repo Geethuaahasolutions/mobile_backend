@@ -1,34 +1,19 @@
 require('dotenv').config();
-const mysql = require('mysql2');
-const util = require('util');
+const mysql = require('mysql2/promise');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD, // will be '' (empty string) if blank in .env
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
-
-// Optional: Promisify for async/await usage
-pool.query = util.promisify(pool.query);
-
-// Log every query (for debugging)
-pool.on('connection', (connection) => {
-  connection.on('enqueue', (sequence) => {
-    if (sequence.sql) {
-      console.log(`[DB QUERY] ${sequence.sql}`);
-    }
+async function main() {
+  const connection = await mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
   });
-});
 
-console.log('MySQL connection pool created!');
+  // Create database if not exists
+  await connection.query(`CREATE DATABASE IF NOT EXISTS mobile_backend`);
+  await connection.query(`USE mobile_backend`);
 
-async function initializeDatabase() {
   // Create users table
-  await pool.query(`
+  await connection.query(`
     CREATE TABLE IF NOT EXISTS users (
       users_id INT AUTO_INCREMENT PRIMARY KEY,
       username VARCHAR(255) NOT NULL UNIQUE,
@@ -46,7 +31,7 @@ async function initializeDatabase() {
   `);
 
   // Create videos table
-  await pool.query(`
+  await connection.query(`
     CREATE TABLE IF NOT EXISTS videos (
       id INT AUTO_INCREMENT PRIMARY KEY,
       filename VARCHAR(255) NOT NULL,
@@ -59,7 +44,7 @@ async function initializeDatabase() {
   `);
 
   // Create images table
-  await pool.query(`
+  await connection.query(`
     CREATE TABLE IF NOT EXISTS images (
       id INT AUTO_INCREMENT PRIMARY KEY,
       path VARCHAR(255) NOT NULL,
@@ -69,9 +54,9 @@ async function initializeDatabase() {
   `);
 
   // Seed images table if empty
-  const rows = await pool.query('SELECT COUNT(*) as count FROM images');
+  const [rows] = await connection.query('SELECT COUNT(*) as count FROM images');
   if (rows[0].count === 0) {
-    await pool.query(`
+    await connection.query(`
       INSERT INTO images (path) VALUES
       ('/assets/images/1749622914064.png'),
       ('/assets/images/1749622929458.png'),
@@ -86,10 +71,12 @@ async function initializeDatabase() {
     `);
     console.log('Seeded images table with initial data.');
   }
+
+  await connection.end();
+  console.log('Database setup complete!');
 }
 
-initializeDatabase().catch(err => {
-  console.error('Database initialization failed:', err);
+main().catch(err => {
+  console.error('Database setup failed:', err);
+  process.exit(1);
 });
-
-module.exports = pool;
