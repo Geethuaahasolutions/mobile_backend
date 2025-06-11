@@ -204,6 +204,49 @@
         }
       ],
       "_type": "request"
+    },
+    {
+      "_id": "req_get_all_images",
+      "parentId": "wrk_signup_api",
+      "name": "Get All Images",
+      "description": "Fetch all uploaded images.",
+      "method": "GET",
+      "url": "http://localhost:3000/api/images/",
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_get_image_by_id",
+      "parentId": "wrk_signup_api",
+      "name": "Get Image By ID",
+      "description": "Fetch a single image by its ID.",
+      "method": "GET",
+      "url": "http://localhost:3000/api/images/1",
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
+    },
+    {
+      "_id": "req_upload_image",
+      "parentId": "wrk_signup_api",
+      "name": "Upload Image",
+      "description": "Upload an image file.",
+      "method": "POST",
+      "url": "http://localhost:3000/api/images/upload",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          {
+            "name": "image",
+            "type": "file",
+            "fileName": "/path/to/your/image.jpg"
+          }
+        ]
+      },
+      "parameters": [],
+      "headers": [],
+      "_type": "request"
     }
   ]
 }

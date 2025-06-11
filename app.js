@@ -8,6 +8,8 @@ const signupRoutes = require('./signup/signupRoutes');
 const loginRoutes = require('./login/loginRoutes');
 const forgotRoutes = require('./forgot/forgotRoutes');
 const uploadRoutes = require('./uploadvideo/uploadRoutes');
+const imageRoutes = require('./image/imageRoutes');
+
 
 const app = express();
 app.use(express.json());
@@ -37,6 +39,7 @@ app.use('/signup', signupRoutes);
 app.use('/login', loginRoutes);
 app.use('/forgot', forgotRoutes);
 app.use('/videos', uploadRoutes);
+app.use('/api/images', imageRoutes);
 
 // Optional: Streaming route for large video files
 app.get('/stream/:language/:level/:filename', (req, res) => {
